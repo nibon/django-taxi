@@ -1,11 +1,5 @@
 from django import forms
-from django.apps import apps
 from django.contrib.contenttypes.fields import GenericRelation
-
-app_name = apps.get_app_config("django_taxi").name
-
-
-print("app_name", app_name)
 
 
 class TaxiBaseField:
@@ -25,7 +19,7 @@ class TaxiSingleField(TaxiBaseField, forms.ChoiceField):
 
 
 class TaxiRelation(GenericRelation):
-    taxonomy = f"{app_name}.TermTaxonomyItem"
+    taxonomy = f"django_taxi.TermTaxonomyItem"
 
     def __init__(self, taxonomy=None, **kwargs):
         if taxonomy:

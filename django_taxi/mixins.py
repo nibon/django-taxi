@@ -27,6 +27,7 @@ class TaxiModelMixin(forms.ModelForm):
         # Set initial
         instance = kwargs.get("instance")
         if instance:
+            kwargs["initial"] = kwargs.get("initial", {})
             for field in self.taxi_fields:
                 kwargs["initial"].update(
                     {
@@ -90,7 +91,7 @@ class TaxiModelMixin(forms.ModelForm):
                             object_id=instance.pk,
                         ).delete()
                     elif choice.pk not in data and choice.pk not in existing:
-                        # Final case, choice not selected and do not exists.
+                        # Final case, choice not selected and do not exist.
                         pass
 
         return instance

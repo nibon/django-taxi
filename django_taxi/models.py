@@ -12,7 +12,9 @@ class MetaMixin(models.Model):
 
 
 class Taxonomy(MetaMixin, models.Model):
-    """ """
+    """
+    The main model that relate to and populate a single field on a model form.
+    """
 
     name = models.CharField(max_length=128, verbose_name=_("Name"))
     slug = models.SlugField()
@@ -34,6 +36,10 @@ class Taxonomy(MetaMixin, models.Model):
 
 
 class Term(MetaMixin, models.Model):
+    """
+    The smallest atomic value that might be used in one or multiple taxonomies.
+    """
+
     name = models.CharField(max_length=128, verbose_name=_("Name"))
     slug = models.SlugField()
 
@@ -46,6 +52,10 @@ class Term(MetaMixin, models.Model):
 
 
 class TermTaxonomy(MetaMixin, models.Model):
+    """
+    Choices in a modelform field that specify a taxonomy.
+    """
+
     term = models.ForeignKey(
         Term,
         on_delete=models.SET_NULL,
@@ -61,15 +71,19 @@ class TermTaxonomy(MetaMixin, models.Model):
         verbose_name=_("Taxonomy"),
     )
 
-    def __str__(self):
-        return f"{self.taxonomy} / {self.term}"
-
     class Meta:
         verbose_name = _("Term Taxonomy")
         verbose_name_plural = _("Term Taxonomies")
 
+    def __str__(self):
+        return f"{self.term}"
+
 
 class TermTaxonomyItem(MetaMixin, models.Model):
+    """
+    Relates a term taxonomy selected and saved choice with any model instance as a generic relation.
+    """
+
     term_taxonomy = models.ForeignKey(
         TermTaxonomy, null=True, on_delete=models.SET_NULL, verbose_name=_("Taxi")
     )
@@ -80,3 +94,6 @@ class TermTaxonomyItem(MetaMixin, models.Model):
     class Meta:
         verbose_name = _("Term Taxonomy Item")
         verbose_name_plural = _("Term Taxonomy Items")
+
+    def __str__(self):
+        return f"{self.term_taxonomy.term}"

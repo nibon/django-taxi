@@ -5,7 +5,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 class TaxiBaseField:
     taxonomy_slug = None
 
-    def __init__(self, taxonomy_slug, *args, **kwargs):
+    def __init__(self, taxonomy_slug: str, *args, **kwargs):
         self.taxonomy_slug = taxonomy_slug
         super().__init__(*args, **kwargs)
 
@@ -21,7 +21,7 @@ class TaxiSingleField(TaxiBaseField, forms.ChoiceField):
 class TaxiRelation(GenericRelation):
     taxonomy = f"django_taxi.TermTaxonomyItem"
 
-    def __init__(self, taxonomy=None, **kwargs):
+    def __init__(self, taxonomy: str = None, **kwargs):
         if taxonomy:
             self.taxonomy = taxonomy
         super().__init__(self.taxonomy, **kwargs)

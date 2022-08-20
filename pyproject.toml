@@ -10,7 +10,7 @@ pre-commit = "^2.20.0"
 Django = "^4.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^7.1"
 pre-commit = "^2.20.0"
 
 [build-system]

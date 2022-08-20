@@ -15,9 +15,6 @@ class TaxiModelMixin(forms.ModelForm):
 
     taxi_fields = None
 
-    def __new__(cls, *args, **kwargs):
-        return super().__new__(cls)
-
     def __init__(self, *args, **kwargs):
         self.taxi_fields = {}
         for field_name, field in self.__class__.base_fields.items():
@@ -55,16 +52,8 @@ class TaxiModelMixin(forms.ModelForm):
             ).values_list("term_taxonomy", flat=True)
         )
 
-    def get_to_delete(self, field, instance, choices=None):
-        if not choices:
-            choices = self.get_choices(field)
-
-    def get_to_add(self, field, instance, choices=None):
-        if not choices:
-            choices = self.get_choices(field)
-
-    def save(self, commit=True):
-        instance = super().save(commit=commit)
+    def _save_taxi(self):
+        instance = self.instance
         content_type = ContentType.objects.get_for_model(instance)
         with transaction.atomic():
             for field, term_taxonomy in self.taxi_fields.items():
@@ -93,5 +82,16 @@ class TaxiModelMixin(forms.ModelForm):
                     elif choice.pk not in data and choice.pk not in existing:
                         # Final case, choice not selected and do not exist.
                         pass
+
+    def _save_m2m_taxi(self):
+        self._save_m2m()
+        self._save_taxi()
+
+    def save(self, commit=True):
+        instance = super().save(commit=commit)
+        if commit:
+            self._save_taxi()
+        else:
+            self.save_m2m = self._save_m2m_taxi  # noqa
 
         return instance

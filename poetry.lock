@@ -262,7 +262,7 @@ docs = ["towncrier (>=21.9)", "sphinx-rtd-theme (>=1)", "sphinx-argparse (>=0.3.
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "130dff1f80516d56b8be2bb030a7fab04d08c927342e139c7c92feb2a542caa4"
+content-hash = "f0d2d7ee06b28bd4a89cf5aea701047ed6013afcfcf798c81eefea642ece515c"
 
 [metadata.files]
 asgiref = [

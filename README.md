@@ -20,7 +20,7 @@ Run `./manage.py migrate` that create 4 new tables in the database.
 
 # Example
 
-The example uses a model `MyModel` where we related the taxi terms using the field named `terms`.
+The example uses a model `TestModel` in app `django_app` where we related the taxi terms using the field named `terms`.
 We created a form that required that one shape is given and allow one or multiple colours set on the model instance.
 The form may be used as a regular `ModelForm` and also works fine in admin.
 
@@ -30,7 +30,7 @@ The form may be used as a regular `ModelForm` and also works fine in admin.
     from django_taxi.fields import TaxiRelation
 
 
-    class MyModel(models.Model):
+    class TestModel(models.Model):
         terms = TaxiRelation()  # Inherit from GenericRelation
 
 ## django_app/forms.py
@@ -39,7 +39,7 @@ The form may be used as a regular `ModelForm` and also works fine in admin.
 
     from django_taxi.fields import TaxiField, TaxiSingleField
     from django_taxi.mixins import TaxiModelMixin
-    from .models import MyModel
+    from .models import TestModel
 
 
     class MyAdminForm(TaxiModelMixin, forms.ModelForm):
@@ -47,7 +47,7 @@ The form may be used as a regular `ModelForm` and also works fine in admin.
         colour = TaxiField(label="Colour", taxonomy_slug="colour", required=False)
 
         class Meta:
-            model = MyModel
+            model = TestModel
             fields = ("shape", "colour")
 
 ## Populate django-taxi data

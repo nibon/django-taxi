@@ -120,7 +120,7 @@ class TermTaxonomyItem(MetaMixin, models.Model):
         verbose_name=_("Taxi"),
     )
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    object_id = models.TextField()
     content_object = GenericForeignKey("content_type", "object_id")
 
     objects = TermTaxonomyManager().from_queryset(TermTaxonomyQuerySet)()

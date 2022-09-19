@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("meta", models.JSONField(blank=True, default=dict, null=True)),
-                ("object_id", models.PositiveIntegerField()),
+                ("object_id", models.TextField(verbose_name="ObjectID")),
                 (
                     "content_type",
                     models.ForeignKey(
